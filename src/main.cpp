@@ -13,20 +13,15 @@ using std::istream;
 #include <vector>
 using std::vector;
 #include "baseDeDados.h"
+#include "funcoesSistema.h"
 
 
 int main(int argc, char* argv[]) {
 fstream baseDados;
 fstream sequencia;
-baseDeDados entradaBase;
-entradaBase ("name","2","3","4");
 
-string d= argv[1];
-string base = argv[2];
-string s= argv[3];
-string seq= argv[4];
-string linha;
-
+lerEntradas(argv[1],argv[2],argv[3], argv[4]);
+armazenarDados(baseDados);
 baseDados.open(base, std::ios::in);
 vector<string> row;
 
