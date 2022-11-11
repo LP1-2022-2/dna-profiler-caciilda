@@ -18,9 +18,14 @@ using std::vector;
 
 
 int main(int argc, char* argv[]) {
-lerEntradas(argv[1],argv[2],argv[3], argv[4]);
-armazenarDados();
-lerDNA();
+baseDeDados<string> Base;
+baseDNA usuario;
+
+Base.armazenar(argv[1],argv[2]); 
+
+//cout <<"TAMANHO BASE: "<<  Base.size()<<endl;
+//lerDNA();
+//contarSTRs();
 
 
 

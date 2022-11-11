@@ -22,20 +22,15 @@ using std::stringstream;
 
 string d, base, s, archSequencia;
 string DNA, linhaDNA;
-baseDeDados<string> Base;
+//baseDeDados<string> Base;
 baseDNA usuario;
 fstream baseDados, sequencia;
 
 void lerEntradas(string dAux, string diretorioAux, string sAux, string seqAux){
-cout<<"entrou em lerEntradas()"<<dAux<<endl;
- d= dAux;
- base = diretorioAux;
- cout<<"base: "<<base<<endl;
- s= sAux;
- archSequencia = seqAux;
+
 }
 
-void armazenarDados(){
+/*baseDeDados<string>  armazenarDados(baseDeDados<string> Base){
 baseDados.open(base, std::ios::in);
 
 while (baseDados.peek()!=EOF){
@@ -49,7 +44,8 @@ while (baseDados.peek()!=EOF){
     //cout<<"base.push: "<<linhas[0]<<" " << linhas[1]<<" "<< linhas[2]<< "" << linhas [3]<<endl;
     Base.push(linhas[0],linhas[1],linhas[2],linhas[3]);
     }
-}
+    return Base;
+}*/
 
 void lerDNA(){
    sequencia.open(archSequencia, std::ios::in);
@@ -58,7 +54,17 @@ void lerDNA(){
     cout<<"fim de for"<<endl;
     //cout<<"base.push: "<<linhas[0]<<" " << linhas[1]<<" "<< linhas[2]<< "" << linhas [3]<<endl;
     usuario.push(linhaDNA);
-    usuario.separaSequencia();
+    }
+
+    void contarSTRs(){
+        usuario.separaSequencia();
+    }
+
+    void realizarBusca(){
+       // Base.realizarBusca()
+
+
+
     }
 
 

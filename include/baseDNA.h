@@ -49,7 +49,6 @@ int baseDNA::push(string sequencia)
 
 void baseDNA::separaSequencia(){
 	string STR;
-	
 
 	STR = "AGAT";
 	nAGAT = contarSTR(sequencia, STR);
