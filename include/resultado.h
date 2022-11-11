@@ -5,7 +5,7 @@
 #include <string>
 using std::string;
 using std::getline;
-#include "baseUsuario.h"
+#include "baseDNA.h"
 
 class resultado
 {

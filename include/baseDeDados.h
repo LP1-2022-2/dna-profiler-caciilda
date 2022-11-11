@@ -6,12 +6,12 @@
 template <class T>
 class baseDeDados {
 	private:
-		T* nome, AGAT, AATG, TATC; //ponteiro para os elementos armazenados na baseDeDados
+		T nome, AGAT, AATG, TATC; //ponteiro para os elementos armazenados na baseDeDados
 		int tamanho; //qtdade atual de elementos
 		int capacidade; //qtdade max de elementos
 		int nAGAT, nAATG, nTATC;
 	public:
-		baseDeDados(int n_capacidade = 20);
+		baseDeDados();
 		~baseDeDados();
 		bool empty();
 		bool full();
@@ -24,14 +24,14 @@ class baseDeDados {
 
 //Construtor
 template<class T>
-baseDeDados<T>::baseDeDados(int n_capacidade)
+baseDeDados<T>::baseDeDados()
 {
-	tamanho=0;
-	capacidade=n_capacidade;
-	nome = new T[n_capacidade];
-	AGAT = new T[n_capacidade];
-	AATG = new T[n_capacidade];
-	TATC = new T[n_capacidade];
+	/*tamanho=0;
+	capacidade=20;
+	nome = this->nome;
+	AGAT = this->AGAT;
+	AATG = this->AATG;
+	TATC = this->TATC;*/
 	/*nAGAT = new int [n_capacidade];
 	nAATG = new int [n_capacidade];
 	nAGAT = new int [n_capacidade];
@@ -45,30 +45,17 @@ template<class T>
 baseDeDados<T>::~baseDeDados()
 {
 	std::cout<<"Entrei no destrutor"<<std::endl;
-	delete[] elementos;
 }
 
 template<class T>
 bool baseDeDados<T>::empty()
 {
-	/*
-	if (tamanho==0)
-		return true;
-	else
-		return false;
-		*/
 	return tamanho==0;
 }
 
 template<class T>
 bool baseDeDados<T>::full()
 {
-	/*
-	if (tamanho==capacidade)
-		return true;
-	else
-		return false;
-	*/
 	return tamanho==capacidade;
 }
 
@@ -81,18 +68,13 @@ int baseDeDados<T>::size()
 template<class T>
 int baseDeDados<T>::push(T nome, T AGAT, T AATG, T TATC)
 {
-	if (full())
-		return 0;
-
-	nome[tamanho] = nome;
-	AGAT[tamanho] = AGAT;
-	AATG[tamanho] = AATG;
-	TATC[tamanho] = TATC;
-	tamanho++;
-
+	this->nome = nome;
+	this->AGAT = AGAT;
+	this->AATG = AATG;
+	this->TATC = TATC;
 	return 1;
 }
-
+/*
 template<class T>
 int baseDeDados<T>::pop()
 {
@@ -115,5 +97,5 @@ T& baseDeDados<T>::top()
 
 	return elementos[tamanho-1];
 }
-
+*/
 #endif
