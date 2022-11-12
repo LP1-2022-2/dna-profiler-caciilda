@@ -17,18 +17,12 @@ using std::vector;
 #include <map>
 using std::map;
 using std::stringstream;
-#include "baseDeDados.h"
-#include "baseDNA.h"
 
 string d, base, s, archSequencia;
 string DNA, linhaDNA;
 //baseDeDados<string> Base;
-baseDNA usuario;
 fstream baseDados, sequencia;
 
-void lerEntradas(string dAux, string diretorioAux, string sAux, string seqAux){
-
-}
 
 /*baseDeDados<string>  armazenarDados(baseDeDados<string> Base){
 baseDados.open(base, std::ios::in);
@@ -48,16 +42,10 @@ while (baseDados.peek()!=EOF){
 }*/
 
 void lerDNA(){
-   sequencia.open(archSequencia, std::ios::in);
-	getline(sequencia, linhaDNA, ' ');
-    cout<<linhaDNA<<endl;
-    cout<<"fim de for"<<endl;
-    //cout<<"base.push: "<<linhas[0]<<" " << linhas[1]<<" "<< linhas[2]<< "" << linhas [3]<<endl;
-    usuario.push(linhaDNA);
+ 
     }
 
     void contarSTRs(){
-        usuario.separaSequencia();
     }
 
     void realizarBusca(){

@@ -14,19 +14,20 @@ using std::istream;
 using std::vector;
 #include "baseDeDados.h"
 #include "baseDNA.h"
-#include "funcoesSistema.h"
 
 
 int main(int argc, char* argv[]) {
-baseDeDados<string> Base;
+
+baseDeDados Base;
 baseDNA usuario;
+vector <int> nSTRS;
 
-Base.armazenar(argv[1],argv[2]); 
+Base.armazenar(argv[2]); 
 
-//cout <<"TAMANHO BASE: "<<  Base.size()<<endl;
-//lerDNA();
-//contarSTRs();
-
+usuario.armazenarDNA(argv[4]);
+usuario.separaSequencia();
+nSTRS = usuario.pushNSTRS();
+Base.realizarBusca(nSTRS);
 
 
 return 0;

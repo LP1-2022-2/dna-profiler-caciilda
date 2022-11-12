@@ -6,16 +6,21 @@
 #include<vector>
 //#include "funcoesSistema.h"
 #include "funcaoBaseDeDados.h"
-using std::stoi;
+
    //g++ -o teste -Iinclude -Wall src/*.cpp
    //teste.exe -d data/data.csv -s data/sequence_alice.txt
 
+template <class T>
 class baseDeDados {
 	private:
-		string *nome, *AGAT, *AATG, *TATC; //ponteiro para os elementos armazenados na baseDeDados
+		T* nome;
+		T* AGAT;
+		T* AATG;
+		T* TATC;//ponteiro para os elementos armazenados na baseDeDados
 		int tamanho, capacidade;  //qtdade atual de elementos
 		int *nAGAT, *nAATG, *nTATC;
 		fstream arquivoBaseDados;
+		
 	public:
 		baseDeDados();
 		~baseDeDados();
@@ -28,14 +33,15 @@ class baseDeDados {
 
 
 //Construtor
-baseDeDados::baseDeDados()
+template<class T>
+baseDeDados<T>::baseDeDados()
 {
 	tamanho = 0;
 	capacidade = 100;
-	nome = new string [capacidade];
-	AGAT = new string [capacidade];
-	AATG = new string [capacidade];
-	TATC = new string [capacidade];
+	nome = new T [capacidade];
+	AGAT = new T [capacidade];
+	AATG = new T [capacidade];
+	TATC = new T [capacidade];
 
 	/*
 	nAGAT = atof(AGAT);
@@ -43,7 +49,8 @@ baseDeDados::baseDeDados()
 	nAGAT = atof(TATC);*/
 }
 
-baseDeDados::~baseDeDados()
+template<class T>
+baseDeDados<T>::~baseDeDados()
 {
 	delete[] nome;
 	delete[] AGAT;
@@ -52,12 +59,14 @@ baseDeDados::~baseDeDados()
 	std::cout<<"Entrei no destrutor"<<std::endl;
 }
 
-int baseDeDados::size()
+template<class T>
+int baseDeDados<T>::size()
 {
 	return tamanho;
 }
 
-int baseDeDados::armazenar(string diretorioAux){
+template <class T>
+int baseDeDados<T>::armazenar(string diretorioAux){
 
 arquivoBaseDados.open(diretorioAux, std::ios::in);
 
@@ -79,15 +88,16 @@ while (arquivoBaseDados.peek()!=EOF){
 	return 1;
 }
 
-int baseDeDados::pop()
+template<class T>
+int baseDeDados<T>::pop()
 {
 	tamanho--;
 	return 1;
 }
 
 
-
-vector <string> baseDeDados::realizarBusca(vector <int> nSTRS){
+template <class T>
+vector <string> baseDeDados<T>::realizarBusca(vector <int> nSTRS){
 
 int nSTREntrada [3];
 int nSTRAGAT[tamanho],nSTRAATG[tamanho],nSTRTATC[tamanho];
@@ -106,11 +116,14 @@ for (ptr = nSTRS.begin(); ptr < nSTRS.end(); ptr++){
 	 }
 
 //colocando STRs de vetor de STRING para vetor de INT
-for (int dado = 1; dado <tamanho; dado++){
-	nSTRAGAT[dado]=stoi(AGAT[dado]);
-	nSTRAATG[dado]=stoi(AATG[dado]);
-	nSTRTATC[dado]=stoi(TATC[dado]);
-	cout <<nSTRAGAT[dado] <<endl;
+for (int dado = 1; dado <tamanho-1; dado++){
+int auxiliar;
+string auxliar2="2";
+	auxiliar = std::stoi(AGAT[tamanho]);
+	//nSTRAGAT[tamanho]=;
+	//nSTRAATG[tamanho]=std::stoi(AATG[tamanho]);
+	//nSTRTATC[tamanho]=std::stoi(TATC[tamanho]);
+	cout << auxiliar <<endl;
 }
 
 for (int entrada = 0 ; entrada<3; entrada++){ // Para cada dado de STR

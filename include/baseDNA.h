@@ -15,16 +15,19 @@ using std::istringstream;
 using std::istream;
 #include <iostream>
 //#include "funcoesSistema.h"
-#include "funcoesBases.h"
+#include "funcaoBaseDNA.h"
 
 class baseDNA {
 	private:
 		string sequencia; //ponteiro para os elementos armazenados na baseDNA
-		int nAGAT, nAATG, nTATC;
+		int nAGAT, nAATG, nTATC; 
+		fstream arquivoDNA; // arquivo 
+
 	public:
 		baseDNA();
 		~baseDNA();
-		int push(string sequencia);
+		int armazenarDNA(string diretorioAux);
+		vector<int> pushNSTRS();
 		void separaSequencia();
 };
 
@@ -41,9 +44,22 @@ baseDNA::~baseDNA()
 	std::cout<<"Entrei no destrutor"<<std::endl;
 }
 
-int baseDNA::push(string sequencia)
+vector<int> baseDNA::pushNSTRS ()
 {
-	this->sequencia = sequencia;
+    vector<int> nSTRS;
+    nSTRS.reserve(3);
+	nSTRS.push_back(nAGAT);
+    nSTRS.push_back(nAATG);
+	nSTRS.push_back(nTATC);
+    return nSTRS;
+}
+
+int baseDNA::armazenarDNA(string diretorioAux){
+	string linhaDNA;
+	arquivoDNA.open(diretorioAux, std::ios::in);
+	getline(arquivoDNA, linhaDNA, ' ');
+    cout<<linhaDNA<<endl;
+    sequencia = linhaDNA;
 	return 1;
 }
 
