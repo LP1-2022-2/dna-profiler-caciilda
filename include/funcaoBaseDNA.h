@@ -18,24 +18,33 @@ using std::vector;
 using std::map;
 using std::stringstream;
 
+vector<int> separador;
 
-int contarSTR(string sequencia, string STR){
 
+vector <int> contarSTR(string sequencia, string STR){
+separador.clear();
     size_t found = sequencia.find(STR);
     int f = 0;
-    int listaFounds[100]; //histórico de founds encontrados
+    int listaFounds[100];
+   //histórico de founds encontrados
     int contador = 0;
-
-    if (found != string::npos){
+   // cout <<endl;
+   if (found != string::npos){
         listaFounds[f] = found;
+        //cout <<found<<" ";
+        separador.push_back(found);
         contador++;
         f++;
-        //cout<<"encontrado em: "<<found<<endl;
+       // cout<<"encontrado em: "<<found<<endl;
     }
+
     while (found != string::npos){	 
 		found = sequencia.find(STR, found+1);
+        //cout <<found<<" ";
+       // cout<<"found funcao: "<<found<<endl;
         listaFounds[f] = found;
-       //cout << "founds f: "<<lista[f]<< " founds f-1: " << lista[f-1]<<endl;
+        separador.push_back(found);
+      // cout << "founds f: "<<listaFounds[f]<< " founds f-1: " << listaFounds[f-1]<<endl;
         //cout << "First occurrence is " << found << endl;
 		if (found == string::npos){
 			break;
@@ -43,19 +52,14 @@ int contarSTR(string sequencia, string STR){
             if (listaFounds[f] == listaFounds[f-1]+4){
             contador++;
             f++;
-            //cout<<"encontrado em: "<< found<<endl;
+           // cout<<"encontrado em: "<< found<<endl;
             }
         }
 
         }
-        return contador;
+        separador.push_back(contador);
+        return separador;
     }
-
-void enviarSTRS(){
-
-
-}
-
 
 /*
 int checarMaiorSequencia(string sequencia, string STR, int nSTR){

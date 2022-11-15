@@ -1,33 +1,27 @@
 #include<iostream>
-#include<cstdlib>
-#include <cctype>
-#include <fstream>
-using std::fstream;
-using std::cout;
-using std::endl;
-#include <string>
-using std::string;
-using std::getline;
-using std::istringstream;
-using std::istream;
-#include <vector>
-using std::vector;
-#include "baseDeDados.h"
+#include <windows.h>
 #include "baseDNA.h"
+#include "saida.h"
 
 
 int main(int argc, char* argv[]) {
 
-baseDeDados Base;
-baseDNA usuario;
-vector <int> nSTRS;
+saida console;
+string DNA;
 
-Base.armazenar(argv[2]); 
+vector <int> indicesAGAT;
+vector <int> indicesAATG;
+vector <int> indicesTATC;
 
-usuario.armazenarDNA(argv[4]);
-usuario.separaSequencia();
-nSTRS = usuario.pushNSTRS();
-Base.realizarBusca(nSTRS);
+console.cabecalho();
+console.load_paths(argv[2], argv[1]);
+
+
+indicesAGAT = usuario.push_indicesAGAT();
+indicesAATG = usuario.push_indicesAATG();
+indicesTATC = usuario.push_indicesTATC();
+//console.resposta(usuarioEncontrado, nSTRS,indicesAGAT, indicesAATG, indicesTATC,DNA);
+
 
 
 return 0;

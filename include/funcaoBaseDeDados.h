@@ -22,7 +22,7 @@ string d, base, s, archSequencia;
 string DNA, linhaDNA;
 //baseDeDados<string> Base;
 fstream baseDados, sequencia;
-
+vector<int>::iterator ptr;
 
 /*baseDeDados<string>  armazenarDados(baseDeDados<string> Base){
 baseDados.open(base, std::ios::in);
@@ -41,20 +41,17 @@ while (baseDados.peek()!=EOF){
     return Base;
 }*/
 
-void lerDNA(){
- 
+
+int verPrimeiro(int indAGAT, int indAATG,int indTATC){
+    int menor= indAGAT;
+    if (indAATG < indAGAT){
+        menor=indAATG;
+    } else if (indTATC < indAGAT) {
+        menor=indTATC;
+    } else {
+        menor = indAGAT;
     }
-
-    void contarSTRs(){
-    }
-
-    void realizarBusca(){
-       // Base.realizarBusca()
-
-
-
-    }
-
-
+    return menor;
+}
    //g++ -o teste -Iinclude -Wall src/*.cpp
    //teste.exe -d data/data.csv -s data/sequence_alice.txt

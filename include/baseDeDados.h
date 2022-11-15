@@ -4,11 +4,20 @@
 #include <cstdlib>
 #include<iterator> // for iterators
 #include<vector>
+using std::fstream;
+using std::cout;
+using std::endl;
+using std::vector;
+using std::string;
+using std::getline;
+using std::istringstream;
+using std::istream;
 //#include "funcoesSistema.h"
 #include "funcaoBaseDeDados.h"
 using std::stoi;
    //g++ -o teste -Iinclude -Wall src/*.cpp
-   //teste.exe -d data/data.csv -s data/sequence_alice.txt
+   //
+   
 
 class baseDeDados {
 	private:
@@ -19,11 +28,12 @@ class baseDeDados {
 	public:
 		baseDeDados();
 		~baseDeDados();
+		string push_ID(int ID);
 		int armazenar(string diretorioAux);
 		int size();
 		int pop();
 		//int push(T nome, T AGAT, T AATG, T TATC);
-		vector<string> realizarBusca(vector<int> nSTRS);
+		int realizarBusca(vector<int> nSTRS);
 };
 
 
@@ -49,7 +59,7 @@ baseDeDados::~baseDeDados()
 	delete[] AGAT;
 	delete[] AATG;
 	delete[] TATC;
-	std::cout<<"Entrei no destrutor"<<std::endl;
+	//std::cout<<"Entrei no destrutor"<<std::endl;
 }
 
 int baseDeDados::size()
@@ -57,19 +67,22 @@ int baseDeDados::size()
 	return tamanho;
 }
 
+//----------------------------------------------
+// Abrir arquivo csv e armazenar nos ponteiros.
 int baseDeDados::armazenar(string diretorioAux){
 
-arquivoBaseDados.open(diretorioAux, std::ios::in);
+arquivoBaseDados.open(diretorioAux, std::ios::in); //abrir o direitorio .csv
 
-while (arquivoBaseDados.peek()!=EOF){
+while (arquivoBaseDados.peek()!=EOF){ //enquanto o documento não estiver no fim
     string linhas[4];
-	cout<< tamanho <<endl;
+	//cout<< tamanho <<endl;
 
 	for (int i = 0; i < 4; i++){
-		getline(arquivoBaseDados, linhas[i], ',');
-		cout<<linhas[i]<<endl;
+		getline(arquivoBaseDados, linhas[i], ','); // get dados que estão separados por ","
+		//cout<<linhas[i]<<endl;// e adiciona no vetor 
 	}
 
+// organizando cada dado em um ponteiro
 	nome[tamanho] = linhas[0];
 	AGAT[tamanho] = linhas[1];
 	AATG[tamanho] = linhas[2];
@@ -78,19 +91,19 @@ while (arquivoBaseDados.peek()!=EOF){
 	}
 	return 1;
 }
-
+//----------------------------------------------
+// diminuir última linha de dados.
 int baseDeDados::pop()
 {
 	tamanho--;
 	return 1;
 }
-
-
-
-vector <string> baseDeDados::realizarBusca(vector <int> nSTRS){
+//----------------------------------------------
+// Realizar busca
+int baseDeDados::realizarBusca(vector <int> nSTRS){
 
 int nSTREntrada [3];
-int nSTRAGAT[tamanho],nSTRAATG[tamanho],nSTRTATC[tamanho];
+int nSTRAGAT[tamanho], nSTRAATG[tamanho], nSTRTATC[tamanho];
 int i=0;
 vector<int>::iterator ptr;
 int usuarioEncontrado;
@@ -101,7 +114,9 @@ string nSaidaAux;
 //colocando STRs de entrada de VECTOR para VETOR
 for (ptr = nSTRS.begin(); ptr < nSTRS.end(); ptr++){
 		//nSTREntrada[i]=*ptr;
-		cout << *ptr << " ";
+		//cout <<"dados de entrada STR: ";
+		//cout << *ptr << " "<<endl;
+		nSTREntrada[i]=*ptr;
 		i++;
 	 }
 
@@ -110,33 +125,57 @@ for (int dado = 1; dado <tamanho; dado++){
 	nSTRAGAT[dado]=stoi(AGAT[dado]);
 	nSTRAATG[dado]=stoi(AATG[dado]);
 	nSTRTATC[dado]=stoi(TATC[dado]);
-	cout <<nSTRAGAT[dado] <<endl;
+	//cout << "nSTRAGAT:";
+	//cout <<nSTRAGAT[dado] <<endl;
+	//cout <<"nSTRAATG: "<<nSTRAATG[dado] <<endl;
+	//cout <<"nSTRTATC: "<< nSTRTATC[dado] <<endl;
 }
+   //g++ -o teste -Iinclude -Wall src/*.cpp
+   //teste.exe -d data/data.csv -s data/sequence_alice.txt
 
-for (int entrada = 0 ; entrada<3; entrada++){ // Para cada dado de STR
-	for (int dado = 1; dado <tamanho; dado++){ // verificar em cada STR da BASE DE DADOS
-		if(nSTREntrada[entrada] == nSTRAGAT[dado]){ // Se ENTRADA[] == nAGAT[]
-			entrada++;
-			dado = 0;
-			//saida.push_back(nSTRAGAT[dado]);
-			if (nSTREntrada[entrada] == nSTRAATG[dado]){
-				entrada++;
-				dado = 0;
+ // Para cada dado de STR
+ int entrada = 0;
+
+ //bool check1, check2, check3;
+ 
+		for (int dado = 1; dado <tamanho; dado++){ 
+			if (nSTREntrada[entrada] == nSTRAGAT[dado]){
+				//cout<<"primeiro IF ok"<<endl;	
 			}
+		}
+		
+		entrada++;
+			for (int dado = 1; dado <tamanho; dado++){ 
+				//cout<<nSTREntrada[entrada]<<"=="<<nSTRAATG[dado]<<endl;
+				if (nSTREntrada[entrada] == nSTRAATG[dado]){
+					//cout<<"segundo IF ok"<<endl;	
+					}
+				}
+				entrada++;
+
+			for (int dado = 1; dado <tamanho; dado++){ 
 			if (nSTREntrada[entrada] == nSTRTATC[dado]){
+				//cout<<"terceiro IF ok"<<endl;	
 				usuarioEncontrado = dado;
 				//saida.push_back(usuarioEncontrado)
-				cout <<"Match ID:"<< nome[usuarioEncontrado]<<endl;
+				//cout <<nSTREntrada[entrada] <<"=="<< nSTRAATG[dado]<<endl;
+				//cout <<"Match ID:"<< nome[usuarioEncontrado]<<endl;
+				return usuarioEncontrado;
 			}
-		} else { 
-			cout <<"NOT FOUND"<<endl;
-		}
-}
-	 
-}
-return saida;
+	 }
+	 return 0;
 }
 
+string baseDeDados::push_ID(int ID){
+string name="0";
+for (int i = 1; i <tamanho; i++){
+	if (i = ID ){
+		name = nome[i];
+	}
+}
+
+return name;
+}
 
 
 #endif
