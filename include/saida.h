@@ -80,18 +80,20 @@ indicesTATC.clear();
 indicesAGAT = usuario.push_indicesAGAT();
 indicesAATG = usuario.push_indicesAATG();
 indicesTATC = usuario.push_indicesTATC();
-
 //passando de vector para vetor
 for (ptr = nSTRS.begin(); ptr < nSTRS.end(); ptr++){
 	nSTR[i]= *ptr;
 	i++;
 	}
-	int indAGAT[nSTR[0]],indAATG[nSTR[1]],indTATC[nSTR[2]]; //QUANTIDADE por INDICES
 
+	int indAGAT[nSTR[0]], indAATG[nSTR[1]], indTATC[nSTR[2]]; //QUANTIDADE por INDICES
+
+//vector <int>indAGAT,indAATG,indTATC;
 	i=0;
 	//passando de vector para vetor e desconsiderando o último elemento (a quantidade de STR)
 	for (ptr = indicesAGAT.begin(); ptr < indicesAGAT.end()-1; ptr++){
 	indAGAT[i]= *ptr;
+	//indAGAT.push_back(*ptr);
 	i++;
 	}
 	i=0;
@@ -99,12 +101,14 @@ for (ptr = nSTRS.begin(); ptr < nSTRS.end(); ptr++){
 	for (ptr2 = indicesAATG.begin(); ptr2 < indicesAATG.end()-1; ptr2++){
 	indAATG[i]= *ptr2;
 	i++;
+	//indAATG.push_back(*ptr2);
 	}
 	i=0; 
 	//passando de vector para vetor e desconsiderando o último elemento (a quantidade de STR)
 	for (ptr3 = indicesTATC.begin(); ptr3 < indicesTATC.end()-1; ptr3++){
 	indTATC[i]= *ptr3;
 	i++;
+	//indTATC.push_back(*ptr3);
 	}
 
 cout<<"Match ID (99.9%): "<<usuarie<<endl;
@@ -114,6 +118,7 @@ cout<<"                         AGAT: [x"<<nSTR[0]<<"]"<<"     AATG: [x"<<nSTR[1
 int tamDNA = DNA.length();
 
 dnaFinal(DNA, tamDNA, indAGAT, indAATG, indTATC);
+//dnaFinal(DNA, tamDNA, indAGAT, indAATG, indTATC);
 
 }
 

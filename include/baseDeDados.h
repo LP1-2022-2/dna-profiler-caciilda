@@ -96,10 +96,9 @@ for (int dado = 1; dado <tamanho; dado++){
 		}
 	} 
  }
- if (usuarioEncontrado == 0){
-	 return 0; 
-	 }
+	 return 0; 	 
 }
+
 // retorna o nome a partir do ID buscado.
 string baseDeDados::push_ID(int ID){
 string name;
@@ -110,6 +109,4 @@ for (int i = 1; i <tamanho; i++){
 }
 return name;
 }
-
-
 #endif

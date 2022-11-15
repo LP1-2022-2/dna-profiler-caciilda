@@ -1,4 +1,4 @@
-FLAGS  = -Iinclude -Wall -pedantic 
+FLAGS  = -Iinclude
 PROGRAMA = dna_profiler
 all: print
 print: bin
