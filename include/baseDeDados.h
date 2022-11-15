@@ -1,13 +1,11 @@
 #ifndef baseDeDados_H
 #define baseDeDados_H
-
 #include "cabecalho.h"
 
 class baseDeDados {
 	private:
 		string *nome, *AGAT, *AATG, *TATC; //ponteiro para os elementos armazenados na baseDeDados
 		int tamanho, capacidade;  // quantidade atual de elementos e capacidade.
-		int nAGAT, nAATG, nTATC; // banco de quantidade de cada STR.
 		fstream arquivoBaseDados;
 	public:
 		baseDeDados();
@@ -16,8 +14,6 @@ class baseDeDados {
 		bool armazenarBase(string diretorioAux);
 		int realizarBusca(vector<int> nSTRS);
 };
-
-
 //Construtor com alocação dinâmica
 baseDeDados::baseDeDados()
 {
@@ -28,7 +24,6 @@ baseDeDados::baseDeDados()
 	AATG = new string [capacidade];
 	TATC = new string [capacidade];
 }
-
 // Destrutor de ponteiros
 baseDeDados::~baseDeDados() {
 	delete[] nome;
@@ -36,7 +31,6 @@ baseDeDados::~baseDeDados() {
 	delete[] AATG;
 	delete[] TATC;
 }
-
 // Abrir arquivo csv e armazenar nos ponteiros.
 bool baseDeDados::armazenarBase(string diretorioAux){
 
@@ -44,7 +38,6 @@ arquivoBaseDados.open(diretorioAux, std::ios::in); //abrir o direitorio .csv
 if (!arquivoBaseDados.is_open()){ // caso o diretorio nao esteja aberto, retornar false e reportar erro
 		return false;
 	}
-
 while (arquivoBaseDados.peek()!=EOF){ // Enquanto o documento não estiver no fim da leitura
     string linhas[4];
 	for (int i = 0; i < 4; i++){
@@ -59,14 +52,13 @@ while (arquivoBaseDados.peek()!=EOF){ // Enquanto o documento não estiver no fi
 	}
 	return true;
 }
-
 //---------BASEDADOS::REALIZARBUSCA----------------------------
 // Realizar busca de perfil em todos os dados do banco de dados.
 int baseDeDados::realizarBusca(vector <int> nSTRS){
 
-int nSTREntrada [3];
+int nSTREntrada[3];
 int nSTRAGAT[tamanho], nSTRAATG[tamanho], nSTRTATC[tamanho];
-int i=0,usuarioEncontrado;
+int i=0, usuarioEncontrado=0;
 vector<int>::iterator ptr;
 vector <string> saida;
 string nameUsuario;
@@ -88,7 +80,7 @@ for (int dado = 1; dado <tamanho; dado++){
  int entrada = 0; //entrada de cada STR que estamos procurando
 
  // realização da busca em cada banco de dados de cada STR.
- for (int dado = 1; dado <tamanho; dado++){ 
+ for (int dado = 1; dado <tamanho; dado++){
 	if (nSTREntrada[entrada] == nSTRAGAT[dado]){
 		entrada++;
 		 for (int dado = 1; dado <tamanho; dado++){ 
@@ -98,14 +90,16 @@ for (int dado = 1; dado <tamanho; dado++){
 				if (nSTREntrada[entrada] == nSTRTATC[dado]){
 					usuarioEncontrado = dado;
 					return usuarioEncontrado; // caso o usuario seja identificado, é enviado seu ID.
-					}else { return 0; } // caso não seja identificado, é enviado 0 e reportado a falta de dados.
+					}  // caso não seja identificado, é enviado 0 e reportado a falta de dados.
 				}
-			}else { return 0; }
+			} 
 		}
-	}else { return 0; }
+	} 
  }
+ if (usuarioEncontrado == 0){
+	 return 0; 
+	 }
 }
-
 // retorna o nome a partir do ID buscado.
 string baseDeDados::push_ID(int ID){
 string name;

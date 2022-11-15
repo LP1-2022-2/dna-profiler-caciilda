@@ -5,14 +5,12 @@
 #include "funcaoBaseDNA.h"
 
 vector<int> separador;
-
 vector <int> contarSTR(string sequencia, string STR){
-
 separador.clear(); //limpa separador para não acumular informação de outros STRs
 
     size_t found = sequencia.find(STR, 0); // find() retornará o índice da primeira ocorrência do STR no DNA
     int f = 0, contador = 0;;
-    int listaFounds[100]; //histórico de founds encontrados
+    int listaFounds[50]; //histórico de founds encontrados
 
    if (found != string::npos){ // se ainda não chegou no fim de find, continuar adicionando
         listaFounds[f] = found;
@@ -40,26 +38,26 @@ void dnaFinal (string DNA,int tamDNA, int indAGAT[], int indAATG[], int indTATC[
 for (int ind = 0; ind <=tamDNA;ind++){
 	if (ind != indAGAT[a] && (ind != indAATG[b]) && ind != indTATC[c]){
 		
-		cout << reset<<DNA[ind];
+		cout << RESET<< DNA[ind];
 	} else{
 		if (indAGAT[a]==ind){
 			a++;
 			for (int q = 0; q <4;q++){
-				cout << green<< DNA[ind+q];
+				cout << GREEN << DNA[ind+q];
 			}
 			ind=ind+3;
 			
 		} else if (indAATG[b]==ind){
 			b++;
 			for (int q = 0; q <4;q++){
-				cout << green<< DNA[ind+q];
+				cout << GREEN << DNA[ind+q];
 			}
 			ind=ind+3;
 		}
 		else {
 			c++;
 			for (int q = 0; q <4;q++){
-				cout << green<< DNA[ind+q];
+				cout << GREEN << DNA[ind+q];
 				
 			};
 			ind=ind+3;

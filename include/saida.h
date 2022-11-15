@@ -25,7 +25,6 @@ class saida {
 		bool buscar();
 };
 
-
 // Construtor
 saida::saida(string nome){
 	this->nome = nome;
@@ -39,20 +38,20 @@ cout << "\033[1;37m   Copyright (C) 2022, Raquel Brena Silva de Lima   " << std:
 cout << "\033[1;35m=====================================================\033[0m"
 << std::endl;
 
-cout<<endl<<"This program loads a DNA database and an unknown"<<endl
-<<"DNA sequence and tries to find a match between"<<
-endl<<"the input DNA sequencia and the DNA database."<<
+cout<<endl<<WHITE<<"This program loads a"<<ROSA<<" DNA database"<<WHITE<<" and an unknown"<<endl
+<<ROSA<<"DNA sequence"<<WHITE<<" and tries to find a "<<GREEN<<"match"<<WHITE<<" between"<<
+endl<<"the input DNA sequencia and the DNA database."<<RESET<<
 endl<<endl;
 }
 
 //carregar arquivos de entrada da base e do DNA desconhecido
 bool saida::load_paths(string base, string dna){
 if ((Base.armazenarBase(base) && usuario.armazenarDNA(dna))!= false){ //caso o armazenamento dos arquivos falhe é reportado o erro.
-cout<<"[+] Preparing to read the DNA Database file ["<<red<<base<<reset<<"]"<<endl;
-cout<<"[+] Preparting to read the unknown DNA sequence file ["<<red<<dna<<reset<<"]"<<endl;
-cout<<"[+] Processing data, please wait."<<endl<<endl;
-cout<<green<<"[+] Input files succesfully read."<<reset<<endl;
-cout<<"[+] Searching the database for a match... please wait."<<endl;
+cout<<ROSA<<"[+] "<<RESET<<"Preparing to read the DNA Database file ["<<RED<<base<<RESET<<"]"<<endl;
+cout<<ROSA<<"[+] "<<RESET<<"Preparting to read the unknown DNA sequence file ["<<RED<<dna<<RESET<<"]"<<endl;
+cout<<ROSA<<"[+] "<<RESET<<"Processing data, please wait."<<endl<<endl;
+cout<<ROSA<<"[+] "<<RESET<<GREEN<<"Input files succesfully read."<<RESET<<endl;
+cout<<ROSA<<"[+] "<<RESET<<AZUL<<"Searching the database for a match... please wait."<<RESET<<endl;
 return true;
 }else { return false; }
 }
@@ -106,7 +105,7 @@ for (ptr = nSTRS.begin(); ptr < nSTRS.end(); ptr++){
 	for (ptr3 = indicesTATC.begin(); ptr3 < indicesTATC.end()-1; ptr3++){
 	indTATC[i]= *ptr3;
 	i++;
-	} cout<<endl;
+	}
 
 cout<<"Match ID (99.9%): "<<usuarie<<endl;
 cout<<"DNA Profile: "<<endl;;

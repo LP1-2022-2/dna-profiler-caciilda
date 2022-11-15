@@ -24,10 +24,11 @@ using std::stoi;
 #include <vector>
 using std::vector;
 
-string green = "\033[1;32m";
-string red = "\033[1;31m";
-string reset = "\033[0m";
-
-
+#define GREEN "\033[1;32m"
+#define RED   "\033[1;31m"
+#define RESET "\033[0m"
+#define AZUL  "\033[1;34m"
+#define ROSA  "\033[1;35m"
+#define WHITE  "\033[1;37m"
 
 #endif
