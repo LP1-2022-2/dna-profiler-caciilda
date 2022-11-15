@@ -1,37 +1,23 @@
 #ifndef baseDNA_H
 #define baseDNA_H
-#include<iostream>
 
-#include<cstdlib>
-#include <cctype>
-#include <fstream>
-using std::fstream;
-using std::cout;
-using std::cin;
-using std::endl;
-#include <string>
-using std::string;
-using std::getline;
-using std::istringstream;
-using std::istream;
-#include <iostream>
-//#include "funcoesSistema.h"
+#include "cabecalho.h"
 #include "funcaoBaseDNA.h"
 
 class baseDNA {
 	private:
-		string sequencia; //ponteiro para os elementos armazenados na baseDNA
-		int nAGAT, nAATG, nTATC; 
-		fstream arquivoDNA; // arquivo 
-		vector <int> indicesAGAT;
-		vector <int> indicesAATG;
-		vector <int> indicesTATC;
+		string sequencia; // sequencia de DNA não identificado
+		int nAGAT, nAATG, nTATC; // quantidade de cada STR
+		fstream arquivoDNA; // arquivo de entrada do DNA 
+		vector <int> indicesAGAT; // indices do AGAT
+		vector <int> indicesAATG; // indices do AATG
+		vector <int> indicesTATC; // indices do TATC
 
 	public:
 		baseDNA();
-		~baseDNA();
-		int armazenarDNA(string diretorioAux);
-		vector<int> pushNSTRS();
+		~baseDNA(){};
+		bool armazenarDNA(string diretorioAux);
+		vector<int> push_NSTRS();
 		vector<int> push_indicesAGAT();
 		vector<int> push_indicesAATG();
 		vector<int> push_indicesTATC();
@@ -40,20 +26,57 @@ class baseDNA {
 		
 };
 
-
-//Construtor
+// Construtor
 baseDNA::baseDNA(){
 	nAGAT = 0;
 	nAATG = 0;
 	nTATC = 0;
 }
 
-baseDNA::~baseDNA()
-{
-	//std::cout<<"Entrei no destrutor"<<std::endl;
+// Armazena o DNA de entrada na string sequencia
+bool baseDNA::armazenarDNA(string diretorioAux){
+	string linhaDNA;
+	arquivoDNA.open(diretorioAux, std::ios::in);
+	if (!arquivoDNA.is_open()){ 
+		return false;
+	}
+	getline(arquivoDNA, sequencia, ' ');
+	return true;
 }
 
-vector<int> baseDNA::pushNSTRS ()
+
+// retorna o DNA não identificado
+string baseDNA::pushDNA (){
+    return sequencia;
+}
+
+// separa sequências de SRT do DNA, assim como guarda os indices e retorna a quantidade de cada SRT
+void baseDNA::separaSequencia(){
+
+	vector <int> separador;
+	indicesAATG.clear();
+	indicesAATG.clear();
+	indicesTATC.clear();
+	vector<int>::iterator ptr;
+
+	separador = contarSTR(sequencia, "AGAT"); //Enviando AGAT para o contador de STR
+	for (ptr = separador.begin(); ptr < separador.end(); ptr++){
+		indicesAGAT.push_back(*ptr); //adicionando os indices no vector indicesAGAT
+	} nAGAT = indicesAGAT.back(); //O ultimo elemento do vetor é o nAGAT
+
+	separador = contarSTR(sequencia, "AATG"); //Enviando AGAT para o contador de STR
+	for (ptr = separador.begin(); ptr < separador.end(); ptr++){
+		indicesAATG.push_back(*ptr); //adicionando os indices no vector indicesAATG
+	} nAATG =  indicesAATG.back(); //O ultimo elemento do vetor é o nAATG
+
+	separador = contarSTR(sequencia, "TATC");//Enviando AGAT para o contador de STR
+	for (ptr = separador.begin(); ptr < separador.end(); ptr++){
+		indicesTATC.push_back(*ptr); //adicionando os indices no vector indicesTATC
+	} nTATC = indicesTATC.back(); //O ultimo elemento do vetor é o nTATC
+}
+
+// Retorna a quantidade de cada STR presente no DNA 
+vector<int> baseDNA::push_NSTRS ()
 {
     vector<int> nSTRS;
     nSTRS.reserve(3);
@@ -63,81 +86,22 @@ vector<int> baseDNA::pushNSTRS ()
     return nSTRS;
 }
 
-int baseDNA::armazenarDNA(string diretorioAux){
-	string linhaDNA;
-	arquivoDNA.open(diretorioAux, std::ios::in);
-	getline(arquivoDNA, sequencia, ' ');
-	//cout<<sequencia<<endl;
-	return 1;
-}
-
-string baseDNA::pushDNA ()
-{
-    return sequencia;
-}
-
-void baseDNA::separaSequencia(){
-	vector <int> separador;
-
-	indicesAATG.clear();
-	indicesAATG.clear();
-	indicesTATC.clear();
-	vector<int>::iterator ptr, ptr2;
-
-//colocando STRs de entrada de VECTOR para VETOR
-
-	separador = contarSTR(sequencia, "AGAT");
-	for (ptr = separador.begin(); ptr < separador.end(); ptr++){
-		indicesAGAT.push_back(*ptr);
-	} 
-	nAGAT = indicesAGAT.back();
-	//cout <<endl<<"quantidade de AGAT: "<<nAGAT<<endl;
-
-	for (int j = 0; j <nAGAT;j++){
-	//cout <<"indice NAGAT:" <<indices[j]<<endl;
-	}
-
-	//cout<< endl;
-	
-	separador = contarSTR(sequencia, "AATG");
-	for (ptr = separador.begin(); ptr < separador.end(); ptr++){
-		indicesAATG.push_back(*ptr);
-	} 
-	nAATG =  indicesAATG.back();
-
-	//cout<< endl;
-
-	separador = contarSTR(sequencia, "TATC");
-	for (ptr = separador.begin(); ptr < separador.end(); ptr++){
-		indicesTATC.push_back(*ptr);
-	} 
-	nTATC = indicesTATC.back();
-	//cout <<endl<<"quantidade de nTATC: "<<nTATC<<endl;
-
-	//cout<< endl;
-/*for (ptr2 = indicesTATC.begin(); ptr2 < indicesTATC.end(); ptr2++){
-		cout <<endl<<"indice indicesTATC:" <<*ptr2;
-	}
-	cout <<endl<<"quantidade de nAATG: "<<nTATC<<endl;*/
-
-}
-
-
+// Retorna o índice de AATG
 vector<int> baseDNA::push_indicesAATG ()
 {
     return indicesAATG;
 }
 
+// Retorna o índice de AGAT
 vector<int> baseDNA::push_indicesAGAT ()
 {
     return indicesAGAT;
 }
 
+// Retorna o índice de TATC
 vector<int> baseDNA::push_indicesTATC ()
 {
     return indicesTATC;
 }
+
 #endif
-   
-   //g++ -o teste -Iinclude -Wall src/*.cpp
-   //teste.exe -d data/data.csv -s data/sequence_alice.txt

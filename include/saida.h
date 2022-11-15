@@ -1,162 +1,121 @@
 #ifndef saida_H
 #define saida_H
-
-#include <iostream>
-#include <string>
-#include <list>
-
-using std::list;
-using std::string;
-using std::getline;
+#include "cabecalho.h"
 #include "baseDeDados.h"
-#include "funcaoBaseDeDados.h"
 #include "baseDNA.h"
+
 baseDeDados Base;
 baseDNA usuario;
-class saida
-{
+
+class saida {
 	private:
-		string nome, AGAT, AATG, TATC; //ponteiro para os elementos armazenados na saidario
+	string nome; // nome do usuário encontrado
+	string DNA; // DNA do usuário encontrado
+	int usuarioEncontrado; // ID do usuário encontrado
+	vector <int> nSTRS;	// Vetor da quantidade de STRS
+	vector <int> indicesAGAT; // Vetor dos índices do AGAT
+	vector <int> indicesAATG; // Vetor dos índices do AATG
+	vector <int> indicesTATC; // Vetor dos índices do TATC
 	public:
-		saida(string nome = "usuario", string AGAT = "0",string AATG = "0",string TATC = "0");
-		~saida();
-		void resposta(int usuarioID, vector <int> nSTRS, vector <int> indicesAGAT, vector <int> indicesAATG,vector <int> indicesTATC, string DNA);
-		int push(string nome, string AGAT, string AATG, string TATC);
+		saida(string nome = "usuario");
+		~saida(){};
+		void resposta();
 		void cabecalho();
 		bool load_paths(string data, string dna);
-		void read2(string archive);
-		void processar();
+		bool buscar();
 };
 
 
-//Construtor
+// Construtor
+saida::saida(string nome){
+	this->nome = nome;
 
-saida::saida(string nome, string AGAT, string AATG, string TATC)
-{
-	nome = nome;
-	AGAT = AGAT;
-	AATG = AATG;
-	TATC = TATC;
 }
-
-
-saida::~saida()
-{
-	//std::cout<<"Entrei no destrutor"<<std::endl;
-}
-
-
-int saida::push(string nome, string AGAT, string AATG, string TATC)
-{
-
-	nome= nome;
-	AGAT= AGAT;
-	AATG= AATG;
-	TATC= TATC;
-
-	return 1;
-}
-
-void saida::resposta(int usuarioID, vector <int> nSTRS, vector <int> indicesAGAT, vector <int> indicesAATG,vector <int> indicesTATC, string DNA){
-string usuarie = Base.push_ID(usuarioID);
-int nSTR[3], i = 0;
-vector<int>::iterator ptr,ptr2,ptr3,ptr4;
-list <int> colorir;
-
-for (ptr = nSTRS.begin(); ptr < nSTRS.end(); ptr++){
-	nSTR[i]= *ptr;
-//	cout<<endl;
-//cout<<"quantidade STRS: "<<*ptr;
-//	cout<<endl;
-	i++;
-	}
-
-	int indAGAT[nSTR[0]],indAATG[nSTR[1]],indTATC[nSTR[2]];
-	//------
-	i=0;
-	for (ptr = indicesAGAT.begin(); ptr < indicesAGAT.end()-2; ptr++){
-	indAGAT[i]= *ptr;
-	colorir.push_back(*ptr);
-//	cout<<endl;
-//	cout<<"indAGAT: "<<*ptr;
-	//cout<<endl;
-	i++;
-	}
-	//------
-	i=0;
-	for (ptr = indicesAATG.begin(); ptr < indicesAATG.end()-2; ptr++){
-	indAATG[i]= *ptr;
-	colorir.push_back(*ptr);
-	//cout<<endl;
-	//cout<<"indAATG: "<<*ptr;
-	//cout<<endl;
-	i++;
-	}
-	//------
-	i=0;
-	for (ptr = indicesTATC.begin(); ptr < indicesTATC.end()-2; ptr++){
-	indTATC[i]= *ptr;
-	colorir.push_back(*ptr);
-	//cout<<endl;
-	//cout<<"indAATG: "<<*ptr;
-	//cout<<endl;
-	i++;
-	}
-	int primeiro;
-	primeiro = verPrimeiro(indAGAT[0], indAATG[0], indTATC[0]);
-
-cout<<"Match ID (99.9%): "<<usuarioID<<endl;
-cout<<"DNA Profile: "<<endl;
-
-for (int a=0; a<=primeiro;a++){
-	cout<<" ";
-}
-for (int a=0; a<=nSTR[2]*4;a++){
-	cout<<"v";
-}
-cout<<endl<<"TATC: [x"<<nSTR[2]<<"]"<<endl;
-
-list<int>::iterator it;
-int tamDNA = DNA.size();
-it = colorir.begin();
-//for (int t = 0; t < tamDNA; t++){
-	//if (t = *it){
-		//*it == 
-	//}
-	//for (it = colorir.begin(); it != colorir.end(); ++it){
-		//if (t == *it){
-		//	cout << system ("color 7");
-		//}
-		cout<<DNA;
-//	}
-//}
-}
-
+// tela de apresentação/início
 void saida::cabecalho(){
-cout<<"================================================"<<endl<<"Welcome to the Basic DNA Profiler, v1.0"<<
-endl<<"Copyright (C) 2022, Raquel Brena Silva de Lima"<<endl<<"================================================"<<endl;
+cout << "\033[1;35m=====================================================" << std::endl;
+cout << "\033[1;37m      Welcome to the Basic DNA Profiler, v1.0   " << std::endl;
+cout << "\033[1;37m   Copyright (C) 2022, Raquel Brena Silva de Lima   " << std::endl;
+cout << "\033[1;35m=====================================================\033[0m"
+<< std::endl;
 
 cout<<endl<<"This program loads a DNA database and an unknown"<<endl
-<<"DNA sequence and tries to find a match between"<<endl<<"the input DNA sequencia and the DNA database."<<endl<<endl;
-
+<<"DNA sequence and tries to find a match between"<<
+endl<<"the input DNA sequencia and the DNA database."<<
+endl<<endl;
 }
 
+//carregar arquivos de entrada da base e do DNA desconhecido
 bool saida::load_paths(string base, string dna){
-int usuarioEncontrado;
-vector <int> nSTRS;
-Base.armazenar(base);
-usuario.armazenarDNA(dna);
-cout<<"[+] Preparing to read the DNA Database file ["<<base<<"]"<<endl;
-cout<<"[+] Preparting to read the unknown DNA sequence file ["<<dna<<"]"<<endl;
-cout<<"[+] Processing data, please wait."<<endl;
-cout<<"[+] Input files succesfully read.";
-cout<<" Searching the database for a match... please wait."<<endl;
-string DNA = usuario.pushDNA();
-usuario.separaSequencia();
-nSTRS = usuario.pushNSTRS();
-usuarioEncontrado = Base.realizarBusca(nSTRS);
+if ((Base.armazenarBase(base) && usuario.armazenarDNA(dna))!= false){ //caso o armazenamento dos arquivos falhe é reportado o erro.
+cout<<"[+] Preparing to read the DNA Database file ["<<red<<base<<reset<<"]"<<endl;
+cout<<"[+] Preparting to read the unknown DNA sequence file ["<<red<<dna<<reset<<"]"<<endl;
+cout<<"[+] Processing data, please wait."<<endl<<endl;
+cout<<green<<"[+] Input files succesfully read."<<reset<<endl;
+cout<<"[+] Searching the database for a match... please wait."<<endl;
 return true;
+}else { return false; }
 }
 
+// Chamada do buscar usuário no banco de dados.
+bool saida::buscar(){
+DNA = usuario.pushDNA(); // buscar DNA
+usuario.separaSequencia(); // separar sequência
+nSTRS.clear();
+nSTRS = usuario.push_NSTRS(); // buscar quantidade de cada nSTR
+usuarioEncontrado = Base.realizarBusca(nSTRS); //usuario encontrado? 
+if (usuarioEncontrado != 0 ){
+	return true; // caso usuário encontrado, retorna verdadeiro
+} else { return false; } // caso usuário nao encontrado, retorna falso
+}
+
+// saída da resposta do DNA final
+void saida::resposta(){
+string DNA = usuario.pushDNA();
+string usuarie = Base.push_ID(usuarioEncontrado);
+int nSTR[3], i = 0;
+vector<int>::iterator ptr,ptr2,ptr3,ptr4;
+indicesAGAT.clear();
+indicesAATG.clear();
+indicesTATC.clear();
+indicesAGAT = usuario.push_indicesAGAT();
+indicesAATG = usuario.push_indicesAATG();
+indicesTATC = usuario.push_indicesTATC();
+
+//passando de vector para vetor
+for (ptr = nSTRS.begin(); ptr < nSTRS.end(); ptr++){
+	nSTR[i]= *ptr;
+	i++;
+	}
+	int indAGAT[nSTR[0]],indAATG[nSTR[1]],indTATC[nSTR[2]]; //QUANTIDADE por INDICES
+
+	i=0;
+	//passando de vector para vetor e desconsiderando o último elemento (a quantidade de STR)
+	for (ptr = indicesAGAT.begin(); ptr < indicesAGAT.end()-1; ptr++){
+	indAGAT[i]= *ptr;
+	i++;
+	}
+	i=0;
+	//passando de vector para vetor e desconsiderando o último elemento (a quantidade de STR)
+	for (ptr2 = indicesAATG.begin(); ptr2 < indicesAATG.end()-1; ptr2++){
+	indAATG[i]= *ptr2;
+	i++;
+	}
+	i=0; 
+	//passando de vector para vetor e desconsiderando o último elemento (a quantidade de STR)
+	for (ptr3 = indicesTATC.begin(); ptr3 < indicesTATC.end()-1; ptr3++){
+	indTATC[i]= *ptr3;
+	i++;
+	} cout<<endl;
+
+cout<<"Match ID (99.9%): "<<usuarie<<endl;
+cout<<"DNA Profile: "<<endl;;
+
+cout<<"                         AGAT: [x"<<nSTR[0]<<"]"<<"     AATG: [x"<<nSTR[1]<<"]"<<"     TATC: [x"<<nSTR[2]<<"]"<<endl;;
+int tamDNA = DNA.length();
+
+dnaFinal(DNA, tamDNA, indAGAT, indAATG, indTATC);
+
+}
 
 #endif
