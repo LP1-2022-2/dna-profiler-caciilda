@@ -121,5 +121,4 @@ dnaFinal(DNA, tamDNA, indAGAT, indAATG, indTATC);
 //dnaFinal(DNA, tamDNA, indAGAT, indAATG, indTATC);
 
 }
-
 #endif

@@ -41,7 +41,10 @@ bool baseDNA::armazenarDNA(string diretorioAux){
 		return false;
 	}
 	getline(arquivoDNA, sequencia, ' ');
+	
 	return true;
+
+	 
 }
 
 
@@ -103,5 +106,6 @@ vector<int> baseDNA::push_indicesTATC ()
 {
     return indicesTATC;
 }
+
 
 #endif

@@ -51,7 +51,7 @@ while (arquivoBaseDados.peek()!=EOF){ // Enquanto o documento não estiver no fi
 	tamanho++;
 	}
 	return true;
-}
+	}
 //---------BASEDADOS::REALIZARBUSCA----------------------------
 // Realizar busca de perfil em todos os dados do banco de dados.
 int baseDeDados::realizarBusca(vector <int> nSTRS){
